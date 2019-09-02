@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdint.h>
+#include <vector>
 
 class IFloor {
 public:
@@ -50,6 +51,21 @@ private:
   uint16_t _floorNo;
   bool _isFunctional;
   uint32_t _totalFunctionalDays;
+};
+
+class FloorManager {
+public:
+  static bool Init();
+  static void Destroy();
+  static IFloor& GetFloorInstance(uint16_t floorNo);
+  static bool InitFloorInstances(uint16_t totalFloors);
+
+private:
+  static FloorManager* _self;
+  std::vector<IFloor*> _instances;
+private:
+  IFloor& _getFloorInstance(uint16_t floorNo);
+  bool _initFloorInstances(uint16_t totalFloors);
 };
 
 #endif
